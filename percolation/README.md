@@ -1,14 +1,15 @@
 
+# ${1:Percolation}
+
 Installation
 -----------
 
-Follow step 0 in one of the links below to install algs4 package:
+Follow step 0 in one of the links below to install the algs4 package:
 
-http://algs4.cs.princeton.edu/mac/
-http://algs4.cs.princeton.edu/windows/
-http://algs4.cs.princeton.edu/linux/
+*[For Mac users](http://algs4.cs.princeton.edu/mac/)
+*[For Window users](http://algs4.cs.princeton.edu/windows/)
+*[For Linux users](http://algs4.cs.princeton.edu/linux/)
 
-[Mac users](http://algs4.cs.princeton.edu/mac/)
-[Window users](http://algs4.cs.princeton.edu/windows/)
-[Linux users](http://algs4.cs.princeton.edu/linux/)
-
+Assignment Specification:
+-----------
+*[Details](http://coursera.cs.princeton.edu/algs4/assignments/percolation.html)
