@@ -8,17 +8,21 @@
  */
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
-
+import java.util.Iterator;
 public class Subset {
     public static void main(String[] args) {
-        RandomizedQueue<String> s = new RandomizedQueue<String>();
+        int k = Integer.parseInt(args[0]);
+        RandomizedQueue<String> queue = new RandomizedQueue<String>();
+
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
-            if (!item.equals("-")) s.enqueue(item);
-            else if (!s.isEmpty()) StdOut.print(s.dequeue() + " ");
+            if (!item.equals("-")) queue.enqueue(item);
+            else if (!queue.isEmpty()) StdOut.print(queue.dequeue() + " ");
         }
-        for (String string : s) {
-            System.out.println(string);
+        
+        Iterator<String> queueIterator = queue.iterator();
+        for (int i = 0; i < k; i++) {
+            StdOut.println(queueIterator.next());
         }
     }
 }
