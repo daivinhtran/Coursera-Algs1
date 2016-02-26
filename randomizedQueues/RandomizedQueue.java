@@ -90,13 +90,19 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     // an iterator
     private class ReverseQueueIterator implements Iterator<Item> {
         private int i;
+        private int[] shuffledIndexArr;
 
         public ReverseQueueIterator() {
-            i = size - 1;
+            shuffledIndexArr = new int[size];
+            for (int j = 0; j < size; j++) {
+                shuffledIndexArr[j] = j;
+            }
+            StdRandom.shuffle(shuffledIndexArr);
+            i = 0;
         }
 
         public boolean hasNext() {
-            return i >= 0;
+            return i < size;
         }
 
         public void remove() {
@@ -112,18 +118,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * Unit tests the <tt>Queue</tt> datat type
      */
     public static void main(String[] args) {
-        // RandomizedQueue<String> s = new RandomizedQueue<String>();
-        // while (!StdIn.isEmpty()) {
-        //     String item = StdIn.readString();
-        //     if (!item.equals("-")) s.enqueue(item);
-        //     else if (!s.isEmpty()) StdOut.print(s.dequeue() + " ");
-        // }
 
-        // for (int i = 0; i < Integer.parseInt(args[0]); i++) {
-        //     StdOut.println(s.dequeue());
-        // }
-
-        // System.out.println("size of queue: " + s.size());
     }
 }
 

@@ -8,6 +8,7 @@
  */
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+
 public class Subset {
     public static void main(String[] args) {
         RandomizedQueue<String> s = new RandomizedQueue<String>();
@@ -16,8 +17,11 @@ public class Subset {
             if (!item.equals("-")) s.enqueue(item);
             else if (!s.isEmpty()) StdOut.print(s.dequeue() + " ");
         }
-        for (int i = 0; i < Integer.parseInt(args[0]); i++) {
-            StdOut.println(s.dequeue());
+        for (String string : s) {
+            System.out.println(string);
+        }
+        for (String string : s) {
+            System.out.println(string);
         }
     }
 }

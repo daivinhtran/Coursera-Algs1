@@ -48,6 +48,8 @@ public class Deque<Item> implements Iterable<Item> {
      * @param item the item to add
      */
     public void addFirst(Item item) {
+        if (item == null) 
+            throw new NullPointerException("null pointer not allowed");
         Node oldfirst = first;
         first = new Node();
         first.item = item;
@@ -63,6 +65,8 @@ public class Deque<Item> implements Iterable<Item> {
      * @param item the item to add
      */ 
     public void addLast(Item item) {
+        if (item == null)
+            throw new NullPointerException("null pointer not allowed");
         Node oldlast = last;
         last = new Node();
         last.item = item;
@@ -111,8 +115,9 @@ public class Deque<Item> implements Iterable<Item> {
     // DequeIterator is an instance of Iterator
     private class DequeIterator implements Iterator<Item> {
         private Node current = first;
+
         public boolean hasNext() {
-            return first != null && last != null;
+            return current != null;
         }
 
         public Item next() {
@@ -121,6 +126,7 @@ public class Deque<Item> implements Iterable<Item> {
             current = current.next;
             return item;
         }
+
         public void remove() {
             throw new UnsupportedOperationException();
         }
@@ -129,35 +135,7 @@ public class Deque<Item> implements Iterable<Item> {
      * Unit tests the <tt>Deque</tt> datat type
      */
     public static void main(String[] args) {
-        Deque<Integer> dequeTest = new Deque<Integer>();
-        // for (int i = 1; i < 20; i++) {
-        //     dequeTest.addLast(i);
-        // }
 
-        //Iterator<Integer> dequeIterator = dequeTest.iterator();
-
-        // for (int i : dequeTest) {
-        //     System.out.println("removed " + dequeTest.removeFirst());
-        // }
-
-        // for (int i = 1; i < 40; i = i + 2) {
-        //     dequeTest.addFirst(i);
-        // }
-
-        // while (dequeIterator.hasNext()) {
-        //     System.out.println("removed " + dequeTest.removeFirst());
-        // }
-        // dequeTest.addFirst(1);
-        // System.out.println(dequeTest.first);
-        // System.out.println(dequeTest.last);
-        // dequeTest.removeFirst();
-        // System.out.println(dequeTest.first);
-        // System.out.println(dequeTest.last);
-        // System.out.println(dequeTest.size());
-        // System.out.println(dequeTest.isEmpty());
-        dequeTest.addFirst(1);
-        System.out.println(dequeTest.removeLast());
-        System.out.println(dequeTest.isEmpty());
     }
 }
 
