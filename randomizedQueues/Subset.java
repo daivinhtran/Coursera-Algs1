@@ -20,8 +20,5 @@ public class Subset {
         for (String string : s) {
             System.out.println(string);
         }
-        for (String string : s) {
-            System.out.println(string);
-        }
     }
 }

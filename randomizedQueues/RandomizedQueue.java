@@ -59,7 +59,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return the removed item
      */ 
     public Item dequeue() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
+        if (isEmpty())
+            throw new NoSuchElementException("Queue underflow");
         int index = StdRandom.uniform(size);
         Item item = a[index];
 
@@ -78,7 +79,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return the an random item
      */ 
     public Item sample() {
-        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
+        if (isEmpty())
+            throw new NoSuchElementException("Queue underflow");
         Item item = a[StdRandom.uniform(size)];
         return item;
     }
