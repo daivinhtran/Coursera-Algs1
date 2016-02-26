@@ -1,7 +1,7 @@
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
+import edu.princeton.cs.algs4.StdRandom;
 /**
  * A randomized queue is similar to a stack or queue, except the item removed
  * is chosen uniformly at random from items in the data structure
@@ -9,55 +9,122 @@ import java.util.NoSuchElementException;
  */
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
+    private Item[] a;  // array of items
+    private int size;
+    /**
+     * Initializes an empty stack
+     */
+    public RandomizedQueue() {
+        a = (Item[]) new Object[2];
+        size = 0;
+    }
+    /**
+     * Returns true if the queue is empty
+     * @return <tt>true</tt> if this queue is empty; <tt>false</tt> otherwise
+     */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+    /**
+     * Returns the number of items on the queue
+     * @return the number of items on the queue
+     */
+    public int size() {
+        return size;
+    }
 
-	/**
-	 * Constructs an empty randomized queue
-	 */
-	public RandomizedQueue() {
+    // resize the underlying array holding the elements
+    private void resize(int capacity) {
+        assert capacity >= size;
+        Item[] temp = (Item[]) new Object[capacity];
+        for (int i = 0; i < size; i++) {
+            temp[i] = a[i];
+        }
+        a = temp;
+    }
 
-	}
-	/**
-	 * Returns true if the queue is empty
-	 * @return <tt>true</tt> if this queue is empty; <tt>false</tt> otherwise
-	 */
-	public boolean isEmpty() {
+    /**
+     * Adds the item
+     * @param item the item to add
+     */
+    public void enqueue(Item item) {
+        if (size == a.length) resize(2 * a.length); // double size of array
+        a[size++] = item;
+    }
+    /**
+     * Remove and return a random item
+     * @return the removed item
+     */ 
+    public Item dequeue() {
+        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
+        int index = StdRandom.uniform(size);
+        Item item = a[index];
 
-	}
-	/**
-	 * Returns the number of items on the queue
-	 * @return the number of items on the queue
-	 */
-	public int size() {
+        for (int i = index + 1; i < size; i++) {
+            a[i - 1] = a[i];
+        }
 
-	}
+        a[size - 1] = null;
+        size--;
+        //shrink size of array if neccessary
+        if (size > 0 && size == a.length/4) resize(a.length / 2);
+        return item;
+    }
+    /**
+     * return (but do not remove) a random item
+     * @return the an random item
+     */ 
+    public Item sample() {
+        if (isEmpty()) throw new NoSuchElementException("Queue underflow");
+        Item item = a[StdRandom.uniform(size)];
+        return item;
+    }
+    /**
+     * Return an interator over items in random order
+     * @return an interator over items in random order
+     */
+    public Iterator<Item> iterator() {
+        return new ReverseQueueIterator();
+    }
 
-	/**
-	 * Adds the item
-	 * @param item the item to add
-	 */
-	public void enqueue(Item item) {
+    // an iterator
+    private class ReverseQueueIterator implements Iterator<Item> {
+        private int i;
 
-	}
-	/**
-	 * Remove and return a random item
-	 * @return the removed item
-	 */	
-	public Item dequeue() {
+        public ReverseQueueIterator() {
+            i = size - 1;
+        }
 
-	}
-	/**
-	 * Return an interator over items in order from front to end
-	 * @return an interator over items in order from front to end
-	 */
-	public Iterator<Item> iterator() {
+        public boolean hasNext() {
+            return i >= 0;
+        }
 
-	}
-	/**
-	 * Unit tests the <tt>Queue</tt> datat type
-	 */
-	public static void main(String[] args) {
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
 
-	}
+        public Item next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            return a[i--];
+        }
+    }
+    /**
+     * Unit tests the <tt>Queue</tt> datat type
+     */
+    public static void main(String[] args) {
+        // RandomizedQueue<String> s = new RandomizedQueue<String>();
+        // while (!StdIn.isEmpty()) {
+        //     String item = StdIn.readString();
+        //     if (!item.equals("-")) s.enqueue(item);
+        //     else if (!s.isEmpty()) StdOut.print(s.dequeue() + " ");
+        // }
+
+        // for (int i = 0; i < Integer.parseInt(args[0]); i++) {
+        //     StdOut.println(s.dequeue());
+        // }
+
+        // System.out.println("size of queue: " + s.size());
+    }
 }
 
 
