@@ -48,7 +48,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @param item the item to add
      */
     public void enqueue(Item item) {
-        if (size == a.length) resize(2 * a.length); // double size of array
+        if (item == null) 
+            throw new NullPointerException("null pointer not allowed");
+        if (size == a.length) 
+            resize(2 * a.length); // double size of array
         a[size++] = item;
     }
     /**
@@ -111,7 +114,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         public Item next() {
             if (!hasNext()) throw new NoSuchElementException();
-            return a[i--];
+            return a[shuffledIndexArr[i++]];
         }
     }
     /**
