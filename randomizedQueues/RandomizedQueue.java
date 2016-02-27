@@ -61,16 +61,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public Item dequeue() {
         if (isEmpty())
             throw new NoSuchElementException("Queue underflow");
+
         int index = StdRandom.uniform(size);
         Item item = a[index];
 
-        for (int i = index + 1; i < size; i++) {
-            a[i - 1] = a[i];
-        }
-
+        a[index] = a[size - 1];
         a[size - 1] = null;
         size--;
-        //shrink size of array if neccessary
+        // shrink size of array if neccessary
         if (size > 0 && size == a.length/4) resize(a.length / 2);
         return item;
     }
