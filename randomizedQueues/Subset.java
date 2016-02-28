@@ -6,23 +6,36 @@
  * Each item from the sequence can be printed out at most once
  * @author Vinh Tran
  */
+
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
-import java.util.Iterator;
+import edu.princeton.cs.algs4.StdRandom;
+
 public class Subset {
     public static void main(String[] args) {
         int k = Integer.parseInt(args[0]);
         RandomizedQueue<String> queue = new RandomizedQueue<String>();
-
+        
+        // fill in the Reservoir array
+        for (int i = 0; i < k; i++) {
+            String item = StdIn.readString();
+            queue.enqueue(item);
+        }
+        // replace elements with gradually decreasing probablity
+        int index = k;
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
-            if (!item.equals("-")) queue.enqueue(item);
-            else if (!queue.isEmpty()) StdOut.print(queue.dequeue() + " ");
+            int j = StdRandom.uniform(index + 1);
+            if (j < k) {
+                queue.dequeue();
+                queue.enqueue(item);
+            }
+            index++;
         }
-        
-        Iterator<String> queueIterator = queue.iterator();
-        for (int i = 0; i < k; i++) {
-            StdOut.println(queueIterator.next());
+        for (String string : queue) {
+            StdOut.println(string);
         }
+
+        return;
     }
 }

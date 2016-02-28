@@ -2,6 +2,7 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import edu.princeton.cs.algs4.StdRandom;
+
 /**
  * A randomized queue is similar to a stack or queue, except the item removed
  * is chosen uniformly at random from items in the data structure
