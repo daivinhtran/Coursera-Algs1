@@ -117,7 +117,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             if (!hasNext()) throw new NoSuchElementException();
             return a[shuffledIndexArr[i++]];
         }
-    }
     /**
      * Unit tests the <tt>Queue</tt> datat type
      */
