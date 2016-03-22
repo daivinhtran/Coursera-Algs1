@@ -107,7 +107,7 @@ public class Board {
         do {
             i2 = StdRandom.uniform(N);
             j2 = StdRandom.uniform(N);
-        } while (i1 == i2 && j1 == j2 || tiles[i1][j1] == 0);
+        } while ((i1 == i2 && j1 == j2) || tiles[i2][j2] == 0);
 
         twinBlocks[i1][j1] = tiles[i2][j2];
         twinBlocks[i2][j2] = tiles[i1][j1];
@@ -127,6 +127,9 @@ public class Board {
 
         if (y instanceof Board) {
             Board that = (Board) y;
+            if (that.dimension() != this.dimension())
+                return false;
+
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
                     if (this.tiles[i][j] != that.tiles[i][j])
@@ -221,14 +224,7 @@ public class Board {
             for (int j = 0; j < N; j++)
                 blocks[i][j] = in.readInt();
         Board initial = new Board(blocks);
-        // Board initial2 = new Board(blocks);
-        // System.out.println(initial.equals(initial2));
-        // System.out.println(initial);
-        // System.out.println("Hamming: " + initial.hamming());
-        // System.out.println("Manhattan: " + initial.manhattan());
-        // for (Board neighbor : initial.neighbors()) {
-        //     System.out.println(neighbor);
-        // }
+        
         System.out.println("initial: " + initial);
         System.out.println("twin: " + initial.twin());
     }

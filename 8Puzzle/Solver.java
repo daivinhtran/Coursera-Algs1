@@ -42,6 +42,22 @@ public class Solver {
         }
     }
 
+    private class SearchNodeComparator implements Comparator<SearchNode> {
+        @Override
+        public int compare(SearchNode left, SearchNode right) {
+            int manhattanPriority = Integer.compare(left.board.manhattan() + left.moves,
+                                                    right.board.manhattan() + right.moves);
+            if (manhattanPriority == 0) {
+                int manhattanDistance = Integer.compare(left.board.manhattan(), right.board.manhattan());
+                if (manhattanDistance == 0) {
+                    return Integer.compare(left.board.hamming(), right.board.hamming());
+                }
+                return manhattanDistance;
+            }
+            return manhattanPriority;
+        }
+    }
+
     /**
      * Whether the intial board is solvable
      * @return true if the initial board is solvable. Otherwise, return false
@@ -83,7 +99,6 @@ public class Solver {
                     }
                 }
             }
-
             else {
                 LinkedList<Board> out = new LinkedList<>();
                 do {
@@ -134,24 +149,6 @@ public class Solver {
             StdOut.println("Minimum number of moves = " + solver.moves());
             for (Board board : solver.solution())
                 StdOut.println(board);
-        }
-    }
-
-    // ***************************************************************
-
-    private class SearchNodeComparator implements Comparator<SearchNode> {
-        @Override
-        public int compare(SearchNode left, SearchNode right) {
-            int manhattanPriority = Integer.compare(left.board.manhattan() + left.moves,
-                                                    right.board.manhattan() + right.moves);
-            if (manhattanPriority == 0) {
-                int manhattanDistance = Integer.compare(left.board.manhattan(), right.board.manhattan());
-                if (manhattanDistance == 0) {
-                    return Integer.compare(left.board.hamming(), right.board.hamming());
-                }
-                return manhattanDistance;
-            }
-            return manhattanPriority;
         }
     }
 }
