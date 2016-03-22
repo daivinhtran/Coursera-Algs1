@@ -1,10 +1,9 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdRandom;
-import edu.princeton.cs.algs4.Stack;
+import edu.princeton.cs.algs4.Queue;
 public class Board {
     private final int N; // width or height of the N-by-N Board
     private final int[][] tiles;
-    private static int moves;
     // location of blank square
     private int blankI;
     private int blankJ;
@@ -122,11 +121,12 @@ public class Board {
      * @return true if the board is equal to y; false otherwise
      */
     public boolean equals(Object y) {
-        if (y == null)
-            throw new NullPointerException("invalid input points");
+        if (y == null) {
+            return false;
+        }
 
-        if (y instanceof Board){
-            Board that = (Board)y;
+        if (y instanceof Board) {
+            Board that = (Board) y;
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
                     if (this.tiles[i][j] != that.tiles[i][j])
@@ -144,37 +144,42 @@ public class Board {
      * @return all neighboring boards
      */
     public Iterable<Board> neighbors() {
-        Stack<Board> nbStack = new Stack<Board>();
+        Queue<Board> nbQueue = new Queue<Board>();
         int[][] newTiles;
+
+        // left
+        if (blankJ - 1 >= 0) {
+            newTiles = copyTiles();
+            newTiles[blankI][blankJ - 1] = 0;
+            newTiles[blankI][blankJ] = tiles[blankI][blankJ - 1];
+            nbQueue.enqueue(new Board(newTiles));
+        }
+
+        // right
+        if (blankJ + 1 < N) {
+            newTiles = copyTiles();
+            newTiles[blankI][blankJ + 1] = 0;
+            newTiles[blankI][blankJ] = tiles[blankI][blankJ + 1];
+            nbQueue.enqueue(new Board(newTiles));
+        }
+
         // top
         if (blankI - 1 >= 0) {
             newTiles = copyTiles();
             newTiles[blankI - 1][blankJ] = 0;
             newTiles[blankI][blankJ] = tiles[blankI - 1][blankJ];
-            nbStack.push(new Board(newTiles));
+            nbQueue.enqueue(new Board(newTiles));
         }
 
-        if (blankJ - 1 >= 0) {
-            newTiles = copyTiles();
-            newTiles[blankI][blankJ - 1] = 0;
-            newTiles[blankI][blankJ] = tiles[blankI][blankJ - 1];
-            nbStack.push(new Board(newTiles));
-        }
-
+        // bottom
         if (blankI + 1 < N) {
             newTiles = copyTiles();
             newTiles[blankI + 1][blankJ] = 0;
             newTiles[blankI][blankJ] = tiles[blankI + 1][blankJ];
-            nbStack.push(new Board(newTiles));
+            nbQueue.enqueue(new Board(newTiles));
         }
 
-        if (blankJ + 1 < N) {
-            newTiles = copyTiles();
-            newTiles[blankI][blankJ + 1] = 0;
-            newTiles[blankI][blankJ] = tiles[blankI][blankJ + 1];
-            nbStack.push(new Board(newTiles));
-        }
-        return nbStack;
+        return nbQueue;
     }
 
     /**
@@ -216,10 +221,15 @@ public class Board {
             for (int j = 0; j < N; j++)
                 blocks[i][j] = in.readInt();
         Board initial = new Board(blocks);
-        Board initial2 = new Board(blocks);
-        System.out.println(initial.equals(initial2));
+        // Board initial2 = new Board(blocks);
+        // System.out.println(initial.equals(initial2));
+        // System.out.println(initial);
+        // System.out.println("Hamming: " + initial.hamming());
+        // System.out.println("Manhattan: " + initial.manhattan());
         // for (Board neighbor : initial.neighbors()) {
         //     System.out.println(neighbor);
         // }
+        System.out.println("initial: " + initial);
+        System.out.println("twin: " + initial.twin());
     }
 }
