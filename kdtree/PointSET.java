@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.RectHV;
 
 public class PointSET {
-    TreeSet<Point2D> pointSet;
+    private TreeSet<Point2D> pointSet;
 
     // construct an empty set of points
     public PointSET() {
@@ -22,7 +22,9 @@ public class PointSET {
 
     public void insert(Point2D p) {
         if (p == null) throw new NullPointerException();
-        pointSet.add(p);
+        if (!contains(p)) {
+            pointSet.add(p);
+        }
     }
 
     public boolean contains(Point2D p) {
@@ -32,8 +34,6 @@ public class PointSET {
 
     // draw all points to standard draw
     public void draw() {
-        StdDraw.setPenRadius(0.02);
-        StdDraw.setPenColor(StdDraw.BLUE);
         for (Point2D point : pointSet) {
             point.draw();
         }
@@ -44,8 +44,7 @@ public class PointSET {
         if (rect == null) throw new NullPointerException();
         TreeSet<Point2D> inRangeSet = new TreeSet<>();
         for (Point2D point : pointSet) {
-            if (point.x() > rect.xmin() && point.x() < rect.xmax()
-                && point.y() > rect.ymin() && point.y() < rect.ymax()) {
+            if (rect.contains(point)) {
                 inRangeSet.add(point);
             }
         }
@@ -56,13 +55,13 @@ public class PointSET {
     public Point2D nearest(Point2D p) {
         if (p == null) throw new NullPointerException();
         Point2D champion = pointSet.first();
+        if (champion == null) return null;
+        
         for (Point2D point : pointSet) {
-            if (point.distanceTo(p) < champion.distanceTo(p)) {
+            if (point.distanceSquaredTo(p) < champion.distanceSquaredTo(p)) {
                 champion = point;
             }
         }
-        System.out.println("query: " + p);
-        System.out.println(champion);
         return champion;
     }
 
